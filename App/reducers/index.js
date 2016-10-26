@@ -17,6 +17,7 @@
  import tanda from './tanda/tandaReducer'
 
 
+
  import { combineReducers } from 'redux'
 
  /**
@@ -31,6 +32,6 @@
    global,
    profile,
    tanda
- })
+  })
 
  export default rootReducer

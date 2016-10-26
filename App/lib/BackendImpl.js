@@ -230,6 +230,25 @@ export class BackendImpl extends Backend {
       })
   }
 
+  async createTanda (data) {
+    return await this._fetch({
+      method: 'POST',
+      url: '/api/secure/tanda',
+      body: data
+    })
+      .then((res) => {
+        if ((res.status === 200 || res.status === 201)) {
+          return res.json
+        } else {
+          throw (res.json)
+        }
+      })
+      .catch((error) => {
+        throw (error)
+      })
+  }
+
+
   /**
    * ### _fetch
    * A generic function that prepares the request

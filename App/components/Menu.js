@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
        borderRadius: 5
    },
    title       : {
-       flex    : 1,
        padding : 10,
        textAlignVertical: 'center',
        fontWeight:'bold',

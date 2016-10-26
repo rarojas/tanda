@@ -34,8 +34,9 @@ import {
  *
  * ```Provider``` will tie the React-Native to the Redux store
  */
-import {
-    Provider} from 'react-redux'
+//import {Provider, intlReducer} from 'react-intl-redux'
+
+import { Provider} from 'react-redux'
 
 /**
  * ### configureStore
@@ -75,7 +76,8 @@ function getInitialState () {
     device: (new DeviceInitialState()).set('isMobile', true),
     global: (new GlobalInitialState()),
     profile: new ProfileInitialState(),
-    tanda: new TandaInitialState()
+    tanda: new TandaInitialState(),
+
   }
   return _initState
 }
@@ -146,6 +148,10 @@ import Profile from './containers/Profile'
 import Main from './containers/Main'
 import NewTanda from './containers/NewTanda'
 import Subview from './containers/Subview'
+import AddPerson from './containers/Tanda/AddPerson'
+import Tanda from './containers/Tanda/Tanda'
+
+
 
 /**
  * ## Native
@@ -178,7 +184,7 @@ const getSceneStyle = (/* NavigationSceneRendererProps */ props, computedProps) 
 
 
 
-export default function native (platform) {
+export default function native(platform) {
   let Snowflake = React.createClass({
     render () {
       const store = configureStore(getInitialState())
@@ -192,7 +198,6 @@ export default function native (platform) {
             // setup the router table with App selected as the initial component
             // note: See https://github.com/aksonov/react-native-router-flux/issues/948
       return (
-
         <Provider store={store}>
           <Router sceneStyle={{ backgroundColor: 'white' }} getSceneStyle={getSceneStyle}>
           <Scene key="drawer" component={Drawer} open={false} >
@@ -237,18 +242,21 @@ export default function native (platform) {
                       title={I18n.t('Snowflake.profile')}
                       component={Profile} />
 
-                <Scene key='Tabbar'
-                  tabs
-                  hideNavBar
-                  tabBarStyle={styles.tabBar}
-                  default='Main'>
+                <Scene key='Tabbar' tabs tabBarStyle={styles.tabBar}
+                  default='Tanda'>
+                  <Scene key='Tanda'
+                      iconName={'money'}
+                      icon={TabIcon}
+                      initial
+                      title={I18n.t('Snowflake.Tanda')}
+                      component={Tanda} />
 
-                  <Scene key='Logout'
-                    title={I18n.t('Snowflake.logout')}
+                  <Scene key='AddPerson'
+                    iconName={'male'}
                     icon={TabIcon}
-                    iconName={"sign-out"}
-                    hideNavBar
-                    component={Logout} />
+                    title={I18n.t('Snowflake.AddPerson')}
+                    component={AddPerson} />
+
 
                 </Scene>
               </Scene>
@@ -258,9 +266,6 @@ export default function native (platform) {
       )
     }
   })
-    /**
-     * registerComponent to the AppRegistery and off we go....
-     */
 
   AppRegistry.registerComponent('snowflake', () => Snowflake)
 }

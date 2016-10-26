@@ -30,18 +30,20 @@ var styles = StyleSheet.create({
     marginRight: 10
   },
   button: {
-    backgroundColor: '#FF3366',
-    borderColor: '#FF3366'
+    backgroundColor: '#1EC267',
+    borderColor: '#1EC267'
   }
 
 })
 
 var FormButton = React.createClass({
-  /**
-   * ### render
-   *
-   * Display the Button
-   */
+  propTypes: {
+     className: React.PropTypes.string,
+     style: React.PropTypes.object
+  },
+  getDefaultProps: function() {
+    return({ className: "", style: {} });
+  },
   render () {
     return (
       <View style={styles.signin}>

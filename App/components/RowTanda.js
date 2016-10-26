@@ -1,5 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableHighlight,
+  TouchableNativeFeedback,
+  Platform
+ } from 'react-native';
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -26,13 +35,29 @@ const styles = StyleSheet.create({
   }
 });
 
-const RowTanda = (props) => (
-  <View style={styles.row}>
-    <Text>Nombre: {props.name}</Text>
-    <Text>Cantidad Meta: $ {props.mount}</Text>
-    <Text>Fecha Creación: {props.startDate }</Text>
-    <Text>Periodo : {props.period }</Text>
-  </View>
-);
+var I18n = require('react-native-i18n')
+import Translations from '../lib/Translations'
+I18n.translations = Translations
+
+
+var RowTanda = React.createClass({
+  render() {
+    var props = this.props;
+    var TouchableElement = TouchableHighlight;
+    if (Platform.OS === 'android') {
+      TouchableElement = TouchableNativeFeedback;
+    }
+    return(
+      <TouchableNativeFeedback onPress={this.props.onSelect} >
+        <View style={styles.row}>
+          <Text>{I18n.t('Tanda.name')}: {props.name}</Text>
+          <Text>{I18n.t('Tanda.mount')}: $ {props.mount}</Text>
+          <Text>{I18n.t('Tanda.startDate')}: {props.startDate }</Text>
+          <Text>{I18n.t('Tanda.period')} : {props.period }</Text>
+        </View>
+      </TouchableNativeFeedback>
+    )
+  }
+});
 
 export default RowTanda;

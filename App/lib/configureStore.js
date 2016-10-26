@@ -25,9 +25,7 @@ import reducer from '../reducers'
  * ## creatStoreWithMiddleware
  * Like the name...
  */
-const createStoreWithMiddleware = applyMiddleware(
-  thunk
-)(createStore)
+const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 
 /**
  * ## configureStore

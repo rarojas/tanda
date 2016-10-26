@@ -1,5 +1,5 @@
 'use strict'
 
-import snowflake from './App/app'
+import { snowflake } from './App/app'
 
 snowflake('ios')

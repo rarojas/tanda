@@ -64,4 +64,8 @@ export default keyMirror({
 
   ON_TANDA_FORM_FIELD_CHANGE: null,
 
+  CREATE_TANDA_REQUEST  : null,
+  CREATE_TANDA_SUCCESS  : null,
+  CREATE_TANDA_FAILURE: null,
+
 })

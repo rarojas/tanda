@@ -15,7 +15,8 @@
     "Snowflake": {
       "logout": "Log out",
       "main": "Mis tandas",
-      "profile":"Profile"
+      "profile":"Profile",
+      "AddPerson" :"Add Person"
     },
     "Main": {
       "navigate": "Navigate to Subview",
@@ -63,7 +64,13 @@
     "Tanda": {
       "name":"Name",
       "mount":"Final Mount",
-      "period":"Period"
+      "startDate" : "Create Date",
+      "period":"Period",
+      "person":{
+        "name": "Name",
+        "email":"Email",
+        "phone":"Phone"
+      }
     }
   },
   "fr": {

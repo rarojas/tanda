@@ -28,12 +28,15 @@ import t from 'tcomb-form-native'
 
 let Form = t.form.Form
 
+import ErrorAlert from '../components/ErrorAlert'
 
 const Button = require('apsl-react-native-button')
 
+
 function mapStateToProps (state) {
   return {
-    tanda: state.tanda
+    tanda : state.tanda,
+    user  : state.global.currentUser
   }
 };
 
@@ -72,10 +75,11 @@ class NewTanda extends Component {
 
   constructor(props) {
     super(props)
+    this.errorAlert = new ErrorAlert()
     this.state = {
       formValues: {
         name: '',
-        mount: 1000000,
+        mount: 10000,
         period: '',
       }
     }
@@ -113,6 +117,9 @@ class NewTanda extends Component {
 
 
   render () {
+
+    this.errorAlert.checkError(this.props.tanda.form.error)
+
     let self = this
     var Period = t.enums({
         Daily : 'Daily',
@@ -154,12 +161,13 @@ class NewTanda extends Component {
     }
 
     let onButtonPress = () => {
-      this.props.actions.createTanda(){
-      name      :   this.props.tanda.form.fields.name,
-      mount     :   this.props.tanda.form.fields.mount,
-      startDate :   new Date(),
-      period    :   this.props.tanda.form.fields.period
-      })
+        this.props.actions.createTanda({tanda :  {
+        name      :   this.props.tanda.form.fields.name,
+        mount     :   this.props.tanda.form.fields.mount,
+        startDate :   new Date(),
+        period    :   this.props.tanda.form.fields.period
+      }, token    :   this.props.user
+    });
     }
 
 
@@ -175,7 +183,7 @@ class NewTanda extends Component {
           />
         </View>
 
-        <FormButton onPress={onButtonPress.bind(self)} buttonText={"Crear Tanda"} />
+        <FormButton style={styles.button} onPress={onButtonPress.bind(self)} buttonText={"Crear Tanda"} />
 
       </View>
     )
