@@ -150,6 +150,8 @@ import NewTanda from './containers/NewTanda'
 import Subview from './containers/Subview'
 import AddPerson from './containers/Tanda/AddPerson'
 import Tanda from './containers/Tanda/Tanda'
+import Members from './containers/Tanda/Members'
+
 
 
 
@@ -188,15 +190,9 @@ export default function native(platform) {
   let Snowflake = React.createClass({
     render () {
       const store = configureStore(getInitialState())
-
-            // configureStore will combine reducers from snowflake and main application
-            // it will then create the store based on aggregate state from all reducers
       store.dispatch(setPlatform(platform))
       store.dispatch(setVersion(VERSION))
       store.dispatch(setStore(store))
-
-            // setup the router table with App selected as the initial component
-            // note: See https://github.com/aksonov/react-native-router-flux/issues/948
       return (
         <Provider store={store}>
           <Router sceneStyle={{ backgroundColor: 'white' }} getSceneStyle={getSceneStyle}>
@@ -257,7 +253,11 @@ export default function native(platform) {
                     title={I18n.t('Snowflake.AddPerson')}
                     component={AddPerson} />
 
-
+                    <Scene key='Members'
+                      iconName={'male'}
+                      icon={TabIcon}
+                      title={I18n.t('Snowflake.Members')}
+                      component={Members} />
                 </Scene>
               </Scene>
           </Scene>

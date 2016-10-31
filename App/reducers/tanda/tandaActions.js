@@ -5,7 +5,8 @@ const {
   ON_TANDA_FORM_FIELD_CHANGE,
   CREATE_TANDA_REQUEST,
   CREATE_TANDA_SUCCESS,
-  CREATE_TANDA_FAILURE
+  CREATE_TANDA_FAILURE,
+  SELECT_TANDA
 
 } = require('../../lib/constants').default
 
@@ -32,6 +33,7 @@ export function createTandaSuccess (json) {
     payload: json
   }
 }
+
 export function createTandaFailure (json) {
   return {
     type: CREATE_TANDA_FAILURE,
@@ -39,6 +41,19 @@ export function createTandaFailure (json) {
   }
 }
 
+export function selectTandaRequest(tanda) {
+  return {
+    type : SELECT_TANDA,
+    payload : tanda
+  }
+}
+
+export function selectTanda(tanda){
+  return dispatch => {
+      dispatch(selectTandaRequest(tanda))
+      Actions.Tabbar({title : tanda.toJS().name})
+  }
+}
 
 export function createTanda (request) {
   return dispatch => {

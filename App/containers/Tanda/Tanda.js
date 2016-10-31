@@ -62,11 +62,13 @@ class AddPerson extends Component {
 
   constructor(props) {
     super(props)
+    let tanda =  this.props.tanda.form.tanda.toJS();
     this.state = {
       formValues: {
-        name: '',
-        email: '',
-        phone : ''
+        name   : tanda.name,
+        mount  : tanda.mount,
+        period : tanda.period,
+        startDate : new Date(tanda.startDate)
       }
     }
   }
@@ -75,28 +77,50 @@ class AddPerson extends Component {
   render () {
     let self = this
 
-    let AddPersonForm = t.struct({
+    var Period = t.enums({
+        Daily : 'Daily',
+        Week  : 'Week',
+        Month : 'Month'
+      });
+
+    let NewTandaForm = t.struct({
       name: t.String,
-      email: t.Number,
-      phone : t.String
+      mount: t.Number,
+      period: Period,
+      startDate :  t.Date
     });
 
     let options = {
       auto: 'placeholders',
       fields: {
         name: {
-          label: I18n.t('Tanda.person.name')
-      },
-        email: {
-          label: I18n.t('Tanda.person.email'),
-          keyboardType: 'numeric'
+          label: I18n.t('Tanda.name'),
+          maxLength: 12,
+          editable: !this.props.tanda.form.isFetching,
+          hasError: this.props.tanda.form.fields.nameHasError,
+          error: this.props.tanda.form.fields.nameErrorMsg
         },
-        phone: {
-          label: I18n.t('Tanda.person.phone')
+        mount: {
+          label: I18n.t('Tanda.mount'),
+          keyboardType: 'numeric',
+          editable: !this.props.tanda.form.isFetching,
+          hasError: this.props.tanda.form.fields.mountHasError,
+          error: this.props.tanda.form.fields.mountErrorMsg
+        },
+        period: {
+          label: I18n.t('Tanda.period'),
+          nullOption: {value: '', text: 'Escoje el perido de la tanda'},
+          editable: !this.props.tanda.form.isFetching
+        },
+        startDate : {
+          label   : I18n.t('Tanda.startDate'),
+          editable: false,
+          config: {
+            format: date => date.yyyymmdd()
+          }
         }
       }
     }
-
     let onButtonPress = () => {
 
     }
@@ -107,18 +131,26 @@ class AddPerson extends Component {
         <View style={styles.inputs}>
           <Form
             ref='form'
-            type={AddPersonForm}
+            type={NewTandaForm}
             options={options}
             value={this.state.formValues}
           />
         </View>
 
-        <FormButton onPress={onButtonPress.bind(self)} buttonText={"Agregar Persona"} />
+        <FormButton onPress={onButtonPress.bind(self)} buttonText={"Guardar"} />
 
       </View>
     )
   }
 };
+
+Date.prototype.yyyymmdd = function() {
+  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var dd = this.getDate();
+
+  return [this.getFullYear(),"/", mm,"/", dd].join(''); // padding
+};
+
 
 /**
  * Connect the properties

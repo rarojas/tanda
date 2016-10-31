@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import * as authActions from '../reducers/auth/authActions'
 import * as globalActions from '../reducers/global/globalActions'
 import * as profileActions from '../reducers/profile/profileActions'
+import * as tandaActions from '../reducers/tanda/tandaActions'
 import {Actions} from 'react-native-router-flux'
 import Header from '../components/Header'
 import React, {Component} from 'react'
@@ -40,7 +41,7 @@ function mapStateToProps (state) {
  */
 function mapDispatchToProps (dispatch) {
   return {
-    actions: bindActionCreators({ ...authActions, ...globalActions, ...profileActions }, dispatch)
+    actions: bindActionCreators({ ...authActions, ...globalActions, ...profileActions, ...tandaActions }, dispatch)
   }
 }
 
@@ -98,16 +99,20 @@ class Main extends Component {
   handlePress () {
     Actions.NewTanda();
   }
+
   selectTanda(data) {
-    var tanda = data.toJS();
-    Actions.Tabbar();
+    this.props.actions.selectTanda(data);
+  }
+
+  _renderRow(rowData){
+    return <RowTanda {...rowData.toJS()  } onSelect={() => this.selectTanda(rowData)} />;
   }
 
   render () {
     return (
       <View style={styles.container}>
-          <ListView style={{ margin : 5 }} enableEmptySections = {true} dataSource={this.state.dataSource}
-              renderRow={(rowData) =>  <RowTanda {...rowData.toJS()  } onSelect={() => this.selectTanda(rowData)} /> } />
+          <ListView style={{ margin : 5 }} enableEmptySections = {true}
+          dataSource={this.state.dataSource}  renderRow={(rowData) =>  this._renderRow(rowData) } />
           <Button style={styles.button} onPress={this.handlePress.bind(this)} textStyle={{color:"white"}}>
             {I18n.t('Main.newTanda')}
           </Button>

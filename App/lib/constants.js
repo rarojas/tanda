@@ -67,5 +67,5 @@ export default keyMirror({
   CREATE_TANDA_REQUEST  : null,
   CREATE_TANDA_SUCCESS  : null,
   CREATE_TANDA_FAILURE: null,
-
+  SELECT_TANDA: null,
 })

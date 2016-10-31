@@ -9,7 +9,8 @@ const {
   ON_TANDA_FORM_FIELD_CHANGE,
   CREATE_TANDA_REQUEST,
   CREATE_TANDA_SUCCESS,
-  CREATE_TANDA_FAILURE
+  CREATE_TANDA_FAILURE,
+  SELECT_TANDA
 } = require('../../lib/constants').default
 
 
@@ -40,6 +41,12 @@ export default function tandaReducer(state = initialState,  action) {
 
   case CREATE_TANDA_SUCCESS:
     var tanda = Immutable.fromJS(action.payload);
+    return state.setIn(['form', 'isFetching'], false)
+    .setIn(['form', 'tanda' ], tanda)
+    .setIn(['form', 'error'], null)
+
+  case SELECT_TANDA:
+    var tanda = action.payload;
     return state.setIn(['form', 'isFetching'], false)
     .setIn(['form', 'tanda' ], tanda)
     .setIn(['form', 'error'], null)

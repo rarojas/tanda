@@ -152,10 +152,8 @@ class NewTanda extends Component {
         },
         period: {
           label: I18n.t('Tanda.period'),
-          nullOption: {value: '', text: 'Escoje el perido de la tanda'}
-          //editable: !this.props.profile.form.isFetching,
-          //hasError: this.props.profile.form.fields.emailHasError,
-          //error: this.props.profile.form.fields.emailErrorMsg
+          nullOption: {value: '', text: 'Escoje el perido de la tanda'},
+          editable: !this.props.tanda.form.isFetching
         }
       }
     }
